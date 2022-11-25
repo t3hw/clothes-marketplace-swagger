@@ -47,45 +47,19 @@ paths:
       description: 'Get a list of clothes, use the following path parameters to refine the list: sellerName (partial name search), sellerId, garmentType, minPrice, maxPrice, size'
       operationId: getClothes
       parameters:
-        - name: sellerName
-          in: query
-          schema:
-            type: string
-        - name: sellerId
-          in: query
-          schema:
-            type: string
-        - name: garmentType
-          in: query
-          schema:
-            type: string
-        - name: minPrice
-          in: query
-          schema:
-            type: number
-            format: float
-        - name: maxPrice
-          in: query
-          schema:
-            type: number
-            format: float
-        - name: size
-          in: query
-          schema:
-            type: string
+        - $ref: '#/components/parameters/sellerName'
+        - $ref: '#/components/parameters/sellerId'
+        - $ref: '#/components/parameters/garmentType'
+        - $ref: '#/components/parameters/minPrice'
+        - $ref: '#/components/parameters/maxPrice'
+        - $ref: '#/components/parameters/size'
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthenticationResponseDTO'
-        403:
-          description: User is not authorized, or is missing an auth token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponseDTO'
+                $ref: '#/components/schemas/PublisherDTO'
         404:
           description: Query result not found!
           content:
@@ -104,6 +78,8 @@ paths:
       summary: Add new garment to the market
       description: An api for a publisher to add a new garment to sale
       operationId: publishNewGarment
+      parameters:
+        - $ref: '#/components/parameters/bearerToken'
       requestBody:
         content:
           application/json:
@@ -126,19 +102,14 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDTO'
       security:
         - bearerAuth: []
-
   /Publisher-Service/deleteGarment/{id}/:
     delete:
       summary: Remove a garment from the market
       description: An api for a publisher to unlist a garment from the market
       operationId: deleteGarment
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: number
-            format: int32
+        - $ref: '#/components/parameters/bearerToken'
+        - $ref: '#/components/parameters/garmentId'
       responses:
         204:
           description: Success
@@ -168,12 +139,8 @@ paths:
       description: An api for a publisher to add a new garment to sale
       operationId: updateGarment
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: number
-            format: int32
+        - $ref: '#/components/parameters/bearerToken'
+        - $ref: '#/components/parameters/garmentId'
       requestBody:
         content:
           application/json:
@@ -203,6 +170,54 @@ paths:
       security:
         - bearerAuth: []
 components:
+  parameters:
+    bearerToken:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^Bearer ([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)'
+    garmentId:
+        name: id
+        in: path
+        required: true
+        schema:
+          type: number
+          format: int32
+    sellerName:
+        name: sellerName
+        in: query
+        schema:
+          type: string
+    sellerId:
+        name: sellerId
+        in: query
+        schema:
+          type: string
+          maxLength: 9
+    garmentType:
+        name: garmentType
+        in: query
+        schema:
+          type: string
+    minPrice:
+        name: minPrice
+        in: query
+        schema:
+          type: number
+          format: float
+    maxPrice:
+        name: maxPrice
+        in: query
+        schema:
+          type: number
+          format: float
+    size:
+        name: size
+        in: query
+        schema:
+          type: string
   schemas:
     AuthenticationRequestDTO:
       type: object
@@ -230,7 +245,8 @@ components:
           type: string
           format: date-time
         status:
-          type: int
+          type: number
+          format: int32
         error: 
           type: string
         exception:
@@ -255,9 +271,6 @@ components:
         - Hoodie
         - TankTop
         - Shoes
-    publisherId:
-      type: string
-      maxLength: 9
     garmentSize:
       type: string
       maxLength: 2
@@ -272,6 +285,7 @@ components:
       maxLength: 100
       description: Describe what are you selling?
       example: Red running shoes
+      nullable: true
     price:
       type: number
       format: float
@@ -290,20 +304,24 @@ components:
           description: Publisher Id
           pattern: '^\d{9}$'
           example: 12345682
+          nullable: false
         fullName:
           maxLength: 20
           type: string
           description: The full name of the publisher
           example: Ravid Gontov
+          nullable: false
         address:
           maxLength: 30
           type: string
           description: The Address of the publisher
           example: Broadway 7 New York
+          nullable: false
         garments: 
           type: array
           items:
             $ref: '#/components/schemas/GarmentResponseDTO'
+          nullable: false
       description: Publisher for clothes items
     GarmentRequestDTO:
       type: object
@@ -316,7 +334,6 @@ components:
           $ref: '#/components/schemas/garmentType'
         garmentDescription:
           $ref: '#/components/schemas/garmentDescription'
-          nullable: true
         garmentSize:
           $ref: '#/components/schemas/garmentSize'
         price:
@@ -335,7 +352,6 @@ components:
         garmentType:
           $ref: '#/components/schemas/garmentType'
         garmentDescription:
-          nullable: true
           $ref: '#/components/schemas/garmentDescription'
         garmentSize:
           $ref: '#/components/schemas/garmentSize'

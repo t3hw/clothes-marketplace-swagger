@@ -17,7 +17,7 @@ paths:
           description: Success
       operationId: Health Check
   
-  /Clothes-Service/authenticate:
+  /Public-Marketplace/authenticate:
     post:
       summary: Log in as an authenticated user
       description: Log in and recieve an authentication JWT
@@ -41,7 +41,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDTO'
                 
-  /Clothes-Service/clothes:
+  /Public-Marketplace/clothes:
     get:
       summary: retrieve a searchable list of clothing items that are offered to sale
       description: 'Get a list of clothes, use the following path parameters to refine the list: sellerName (partial name search), sellerId, garmentType, minPrice, maxPrice, size'
@@ -99,7 +99,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDTO'
   
-  /Clothes-Service/publishNewGarment:
+  /Publisher-Service/publishNewGarment/:
     post:
       summary: Add new garment to the market
       description: An api for a publisher to add a new garment to sale
@@ -127,7 +127,7 @@ paths:
       security:
         - bearerAuth: []
 
-  /Clothes-Service/deleteGarment/{id}:
+  /Publisher-Service/deleteGarment/{id}/:
     delete:
       summary: Remove a garment from the market
       description: An api for a publisher to unlist a garment from the market
@@ -162,7 +162,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDTO'
       security:
         - bearerAuth: []
-  /Clothes-Service/updateGarment/{id}:
+  /Publisher-Service/updateGarment/{id}:
     put:
       summary: Add a new garment to the market
       description: An api for a publisher to add a new garment to sale
@@ -225,13 +225,19 @@ components:
           type: string
     ErrorResponseDTO:
       type: object
-      required:
-        - title
-        - message
       properties:
-        title: 
+        timestamp:
           type: string
-        message:
+          format: date-time
+        status:
+          type: int
+        error: 
+          type: string
+        exception:
+          type: string
+        message: 
+          type: string
+        path:
           type: string
   
     garmentId:
@@ -338,6 +344,6 @@ components:
 
   securitySchemes:
     bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+      type: apiKey
+      name: Authorization
+      in: header

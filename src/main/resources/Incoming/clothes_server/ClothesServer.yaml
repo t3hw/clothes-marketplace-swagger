@@ -78,8 +78,6 @@ paths:
       summary: Add new garment to the market
       description: An api for a publisher to add a new garment to sale
       operationId: publishNewGarment
-      parameters:
-        - $ref: '#/components/parameters/bearerToken'
       requestBody:
         content:
           application/json:
@@ -108,7 +106,6 @@ paths:
       description: An api for a publisher to unlist a garment from the market
       operationId: deleteGarment
       parameters:
-        - $ref: '#/components/parameters/bearerToken'
         - $ref: '#/components/parameters/garmentId'
       responses:
         204:
@@ -139,7 +136,6 @@ paths:
       description: An api for a publisher to add a new garment to sale
       operationId: updateGarment
       parameters:
-        - $ref: '#/components/parameters/bearerToken'
         - $ref: '#/components/parameters/garmentId'
       requestBody:
         content:
@@ -171,13 +167,6 @@ paths:
         - bearerAuth: []
 components:
   parameters:
-    bearerToken:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: '^Bearer ([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)'
     garmentId:
         name: id
         in: path
@@ -360,6 +349,6 @@ components:
 
   securitySchemes:
     bearerAuth:
-      type: apiKey
-      name: Authorization
-      in: header
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

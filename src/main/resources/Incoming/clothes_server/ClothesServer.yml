@@ -22,6 +22,11 @@ paths:
       summary: Log in as an authenticated user
       description: Log in and recieve an authentication JWT
       operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/AuthenticationRequestDTO'
       responses:
         200:
           description: Success

@@ -17,7 +17,7 @@ paths:
           description: Success
       operationId: Health Check
   
-  /Public-Marketplace/authenticate:
+  /authenticate:
     post:
       summary: Log in as an authenticated user
       description: Log in and recieve an authentication JWT
@@ -84,8 +84,13 @@ paths:
             schema: 
               $ref: '#/components/schemas/GarmentRequestDTO'
       responses:
-        204:
+        201:
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarmentResponseDTO'
+                
         403:
           description: User is not authorized, or is missing an auth token
           content:
@@ -332,12 +337,6 @@ components:
           $ref: '#/components/schemas/price'
     GarmentResponseDTO:
       type: object
-      required:
-        - garmentId
-        - garmentType
-        - publisher
-        - size
-        - price
       properties:
         garmentId:
           $ref: '#/components/schemas/garmentId'

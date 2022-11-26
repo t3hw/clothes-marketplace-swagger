@@ -59,7 +59,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PublisherDTO'
+                $ref: '#/components/schemas/ClothesResponseDTO'
         404:
           description: Query result not found!
           content:
@@ -280,12 +280,19 @@ components:
       format: float
     
     # DTOs
-    PublisherDTO:
+    ClothesResponseDTO:
       type: object
       required:
         - id
         - fullName
         - address
+      properties:
+        publisherList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublisherDTO'
+    PublisherDTO:
+      type: object
       properties:
         id: 
           maxLength: 9
@@ -293,25 +300,21 @@ components:
           description: Publisher Id
           pattern: '^\d{9}$'
           example: 12345682
-          nullable: false
         fullName:
           maxLength: 20
           type: string
           description: The full name of the publisher
           example: Ravid Gontov
-          nullable: false
         address:
           maxLength: 30
           type: string
           description: The Address of the publisher
           example: Broadway 7 New York
-          nullable: false
         garments: 
           type: array
           items:
             $ref: '#/components/schemas/GarmentResponseDTO'
-          nullable: false
-      description: Publisher for clothes items
+      description: Publisher for clothes items query
     GarmentRequestDTO:
       type: object
       required:

@@ -216,10 +216,10 @@ components:
     AuthenticationRequestDTO:
       type: object
       required:
-        - 'userName'
+        - 'userId'
         - 'password'
       properties:
-        userName:
+        userId:
           type: string
           maxLength: 10
         password:

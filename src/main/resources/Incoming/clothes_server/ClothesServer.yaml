@@ -252,11 +252,13 @@ components:
   
     garmentId:
       type: number
+      nullable: true
       format: int32
       description: Internal identifier for each garment
     garmentType: 
       type: string
       maxLength: 10
+      nullable: true
       enum:
         - Pants
         - Shirt
@@ -268,6 +270,7 @@ components:
     garmentSize:
       type: string
       maxLength: 2
+      nullable: true
       enum:
         - XS
         - S
@@ -283,7 +286,7 @@ components:
     price:
       type: number
       format: float
-    
+      nullable: true
     # DTOs
     ClothesResponseDTO:
       type: object

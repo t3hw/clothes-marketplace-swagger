@@ -82,7 +82,7 @@ paths:
         content:
           application/json:
             schema: 
-              $ref: '#/components/schemas/GarmentRequestDTO'
+              $ref: '#/components/schemas/GarmentPOSTRequestDTO'
       responses:
         201:
           description: Success
@@ -146,7 +146,7 @@ paths:
         content:
           application/json:
             schema: 
-              $ref: '#/components/schemas/GarmentRequestDTO'
+              $ref: '#/components/schemas/GarmentPUTRequestDTO'
       responses:
         204:
           description: Success
@@ -323,7 +323,18 @@ components:
           items:
             $ref: '#/components/schemas/GarmentResponseDTO'
       description: Publisher for clothes items query
-    GarmentRequestDTO:
+    GarmentPOSTRequestDTO:
+      type: object
+      properties:
+        garmentType:
+          $ref: '#/components/schemas/garmentType'
+        garmentDescription:
+          $ref: '#/components/schemas/garmentDescription'
+        garmentSize:
+          $ref: '#/components/schemas/garmentSize'
+        price:
+          $ref: '#/components/schemas/price'
+    GarmentPUTRequestDTO:
       type: object
       properties:
         garmentId:

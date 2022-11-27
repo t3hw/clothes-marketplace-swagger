@@ -322,11 +322,9 @@ components:
       description: Publisher for clothes items query
     GarmentRequestDTO:
       type: object
-      required:
-        - garmentType
-        - size
-        - price
       properties:
+        garmentId:
+          $ref: '#/components/schemas/garmentId'
         garmentType:
           $ref: '#/components/schemas/garmentType'
         garmentDescription:

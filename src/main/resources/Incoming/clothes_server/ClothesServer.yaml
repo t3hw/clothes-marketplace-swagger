@@ -41,7 +41,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDTO'
                 
-  /Public-Marketplace/clothes:
+  /marketplace/clothes:
     get:
       summary: retrieve a searchable list of clothing items that are offered to sale
       description: 'Get a list of clothes, use the following path parameters to refine the list: sellerName (partial name search), sellerId, garmentType, minPrice, maxPrice, size'
@@ -73,7 +73,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDTO'
   
-  /Publisher-Service/publishNewGarment/:
+  /publisher/publishNewGarment/:
     post:
       summary: Add new garment to the market
       description: An api for a publisher to add a new garment to sale
@@ -105,7 +105,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDTO'
       security:
         - bearerAuth: []
-  /Publisher-Service/deleteGarment/{id}/:
+  /publisher/deleteGarment/{id}/:
     delete:
       summary: Remove a garment from the market
       description: An api for a publisher to unlist a garment from the market
@@ -135,7 +135,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDTO'
       security:
         - bearerAuth: []
-  /Publisher-Service/updateGarment/{id}:
+  /publisher/updateGarment/{id}:
     put:
       summary: Add a new garment to the market
       description: An api for a publisher to add a new garment to sale

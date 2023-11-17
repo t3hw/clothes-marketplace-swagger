@@ -177,7 +177,7 @@ components:
         in: path
         required: true
         schema:
-          type: number
+          type: integer
           format: int32
     sellerName:
         name: sellerName
@@ -239,7 +239,7 @@ components:
           type: string
           format: date-time
         status:
-          type: number
+          type: integer
           format: int32
         error: 
           type: string
@@ -251,7 +251,7 @@ components:
           type: string
   
     garmentId:
-      type: number
+      type: integer
       nullable: true
       format: int32
       description: Internal identifier for each garment

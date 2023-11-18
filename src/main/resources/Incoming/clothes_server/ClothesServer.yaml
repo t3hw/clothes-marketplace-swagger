@@ -15,7 +15,7 @@ paths:
       responses:
         200:
           description: Success
-      operationId: Health Check
+      operationId: healthCheck
   
   /authenticate:
     post:
